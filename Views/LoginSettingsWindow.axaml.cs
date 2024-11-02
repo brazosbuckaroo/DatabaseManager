@@ -30,8 +30,8 @@ public partial class LoginSettingsWindow : ReactiveWindow<LoginSettingsWindowVie
 
         this.WhenActivated(action =>
         {
-            //action(ViewModel!.FileExplorerDialog.RegisterHandler(this.OpenFileExplorerAsync));
-            //action(ViewModel!.FolderExplorerDialog.RegisterHandler(this.OpenFolderExplorerAsync));
+            action(ViewModel!.FileExplorerDialog.RegisterHandler(this.OpenFileExplorerAsync));
+            action(ViewModel!.FolderExplorerDialog.RegisterHandler(this.OpenFolderExplorerAsync));
             action(ViewModel!.AcceptSettingsCommand.Subscribe(this.Close));
             action(ViewModel!.CancelCommand.Subscribe(this.Close));
         });
@@ -44,14 +44,14 @@ public partial class LoginSettingsWindow : ReactiveWindow<LoginSettingsWindowVie
     /// class to allow access to the OS's file explorer.
     /// </summary>
     /// <param name="context">
-    /// A <see cref="InteractionContext{string, string}"/> that takes a string as an input
+    /// A <see cref="IInteractionContext{string, string}"/> that takes a string as an input
     /// to name the <see cref="StorageProvider"/> winow and return the selected file's 
     /// filepath as a <see cref="string"/>.
     /// </param>
     /// <returns>
     /// Returns the selected file's filepath as a <see cref="string"/>.
     /// </returns>
-    private async Task OpenFileExplorerAsync(InteractionContext<string, string> context)
+    private async Task OpenFileExplorerAsync(IInteractionContext<string, string> context)
     {
         var topLevel = TopLevel.GetTopLevel(this);
         var file = await topLevel!.StorageProvider.OpenFilePickerAsync(
@@ -72,14 +72,14 @@ public partial class LoginSettingsWindow : ReactiveWindow<LoginSettingsWindowVie
     /// class to allow access to the OS's file explorer.
     /// </summary>
     /// <param name="context">
-    /// A <see cref="InteractionContext{string, string}"/> that takes a string as an input
+    /// A <see cref="IInteractionContext{string, string}"/> that takes a string as an input
     /// to name the <see cref="StorageProvider"/> winow and return the selected folder's 
     /// filepath as a <see cref="string"/>.
     /// </param>
     /// <returns>
     /// Returns the selected folder's filepath as a <see cref="string"/>.
     /// </returns>
-    private async Task OpenFolderExplorerAsync(InteractionContext<string, string> context)
+    private async Task OpenFolderExplorerAsync(IInteractionContext<string, string> context)
     {
         var topLevel = TopLevel.GetTopLevel(this);
         var folder = await topLevel!.StorageProvider.OpenFolderPickerAsync(

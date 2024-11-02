@@ -1,13 +1,7 @@
-﻿using Avalonia.Controls;
-using Avalonia.ReactiveUI;
-using DatabaseManager.Models.Types;
+﻿using Avalonia.ReactiveUI;
 using DatabaseManager.ViewModels;
-using FirebirdSql.Data.FirebirdClient;
 using ReactiveUI;
-using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Reactive;
-using Avalonia.Markup.Xaml;
 
 namespace DatabaseManager.Views;
 
@@ -37,13 +31,13 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     /// window as a dialog for login settings.
     /// </summary>
     /// <param name="context">
-    /// A <see cref="InteractionContext{LoginSettingsWindowViewModel, ApplicationSettingsViewModel}"/> that takes a 
+    /// A <see cref="IInteractionContext{LoginSettingsWindowViewModel, ApplicationSettingsViewModel}"/> that takes a 
     /// <see cref="LoginSettingsWindowViewModel"/> and a <see cref="ApplicationSettingsViewModel"/> to allow for setting changes
     /// </param>
     /// <returns>
     /// Returns a Task to allow for <see cref="async"/> operations.
     /// </returns>
-    private async Task DoShowLoginSettingsDialogAsync(InteractionContext<LoginSettingsWindowViewModel, ApplicationSettingsViewModel> context)
+    private async Task DoShowLoginSettingsDialogAsync(IInteractionContext<LoginSettingsWindowViewModel, ApplicationSettingsViewModel> context)
     {
         var dialog = new LoginSettingsWindow();
 
