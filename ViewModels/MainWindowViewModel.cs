@@ -1,0 +1,74 @@
+﻿using DatabaseManager.Models.Services;
+using ReactiveUI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reactive;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+
+namespace DatabaseManager.ViewModels;
+
+/// <summary>
+/// A class meant to contain all the ViewModels that the <see cref="MainWindow"/>
+/// is meant to know about.
+/// </summary>
+public class MainWindowViewModel : ViewModelBase
+{
+    #region PROPERTIES
+    /// <summary>
+    /// 
+    /// </summary>
+    public RoutingState Router { get; } = new RoutingState();
+
+    /// <summary>
+    /// The ViewModel for the <see cref="LoginSettingsWindow"/>.
+    /// </summary>
+    public LoginSettingsWindowViewModel LoginSettingsWindowViewModel { get; }
+
+    /// <summary>
+    /// The ViewModel meant for the <see cref="LoginView"/>.
+    /// </summary>
+    public LoginViewModel LoginViewModel { get; }
+
+    /// <summary>
+    /// The ViewModel meant for the <see cref="MainView"/>.
+    /// </summary>
+    public DashboardViewModel DashboardViewModel { get; }
+    #endregion
+
+    #region COMMANDS
+    /// <summary>
+    /// An <see cref="ReactiveCommand{Unit, IRoutableViewModel}"/> 
+    /// </summary>
+    public ReactiveCommand<Unit, IRoutableViewModel> LoginCommand { get; }
+    #endregion
+
+    #region CONSTRUCTORS
+    /// <summary>
+    /// The default constructor that makes the <see cref="MainWindowViewModel"/> with 
+    /// the ViewModels it needs to know about.
+    /// </summary>
+    public MainWindowViewModel()
+    {
+        this.LoginViewModel = new LoginViewModel();
+        this.DashboardViewModel = new DashboardViewModel();
+        this.LoginSettingsWindowViewModel = new LoginSettingsWindowViewModel();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="settingsProvider"></param>
+    public MainWindowViewModel(ISettings settingsProvider)
+    {
+        this.LoginViewModel = new LoginViewModel(settingsProvider);
+        this.DashboardViewModel = new DashboardViewModel();
+        this.LoginSettingsWindowViewModel = new LoginSettingsWindowViewModel();
+    }
+    #endregion
+
+    #region METHODS
+    #endregion
+}

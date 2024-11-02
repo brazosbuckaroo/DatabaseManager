@@ -1,0 +1,684 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:DatabaseManager.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DatabaseManager.Views.DashboardView"
+             x:DataType="vm:DashboardViewModel">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:DashboardViewModel />
+  </Design.DataContext>
+
+  <ScrollViewer>
+    <StackPanel>
+      <DockPanel DockPanel.Dock="Top">
+        <TabControl TabStripPlacement="Top">
+          <TabItem Header="Inventory Dashboard"
+                   FontSize="14">
+            <Viewbox>
+              <StackPanel Margin="8"
+                          Spacing="5">
+                <Border Background="DimGray">
+                  <TextBox Watermark="Enter Id"
+                           FontSize="12">
+                  </TextBox>
+                </Border>
+
+                <TextBlock FontSize="12"
+                           FontWeight="Bold">
+                  Search Filters:
+                </TextBlock>
+
+                <Grid ColumnDefinitions="auto, auto, auto, auto, auto, auto"
+                      RowDefinitions="auto, auto, auto"
+                      HorizontalAlignment="Stretch"
+                      ShowGridLines="False"
+                      Background="DimGray">
+                  <TextBlock Margin="8"
+                             FontSize="12"
+                             Grid.Column="0"
+                             Grid.Row="0"
+                             VerticalAlignment="Center">
+                    Categories:
+                  </TextBlock>
+
+                  <ComboBox Grid.Column="1"
+                            Grid.Row="0"
+                            PlaceholderText="Select a Category"
+                            FontSize="12"
+                            MinWidth="200"
+                            Margin="8">
+                  </ComboBox>
+
+                  <TextBlock Margin="8"
+                             FontSize="12"
+                             Grid.Column="2"
+                             Grid.Row="0"
+                             VerticalAlignment="Center">
+                    Subcategories:
+                  </TextBlock>
+
+                  <ComboBox Grid.Column="3"
+                            Grid.Row="0"
+                            PlaceholderText="Select a Subcategory"
+                            FontSize="12"
+                            MinWidth="200"
+                            Margin="8">
+                  </ComboBox>
+
+                  <TextBlock Margin="8"
+                             FontSize="12"
+                             Grid.Column="4"
+                             Grid.Row="0"
+                             VerticalAlignment="Center">
+                    Manufacturer:
+                  </TextBlock>
+
+                  <ComboBox Grid.Column="5"
+                            Grid.Row="0"
+                            PlaceholderText="Select a Manufacturer"
+                            FontSize="12"
+                            MinWidth="200"
+                            Margin="8">
+                  </ComboBox>
+
+                  <StackPanel Grid.Row="1">
+                  </StackPanel>
+
+                  <TextBlock Margin="8"
+                             FontSize="12"
+                             Grid.Column="0"
+                             Grid.Row="2"
+                             VerticalAlignment="Center">
+                    Model:
+                  </TextBlock>
+
+                  <ComboBox Grid.Column="1"
+                            Grid.Row="2"
+                            PlaceholderText="Select a Model"
+                            FontSize="12"
+                            MinWidth="200"
+                            Margin="8">
+                  </ComboBox>
+
+                  <TextBlock Margin="8"
+                             FontSize="12"
+                             Grid.Column="2"
+                             Grid.Row="2"
+                             VerticalAlignment="Center">
+                    Inventory Group:
+                  </TextBlock>
+
+                  <ComboBox Grid.Column="3"
+                            Grid.Row="2"
+                            PlaceholderText="Select a Group"
+                            FontSize="12"
+                            MinWidth="200"
+                            Margin="8">
+                  </ComboBox>
+
+                  <TextBlock Margin="8"
+                             FontSize="12"
+                             Grid.Column="4"
+                             Grid.Row="2"
+                             VerticalAlignment="Center">
+                    Storage Location:
+                  </TextBlock>
+
+                  <ComboBox Grid.Column="5"
+                            Grid.Row="2"
+                            PlaceholderText="Select a Location"
+                            FontSize="12"
+                            MinWidth="200"
+                            Margin="8">
+                  </ComboBox>
+                </Grid>
+
+                <Grid ColumnDefinitions="auto, auto, auto, auto, auto, auto, auto"
+                      RowDefinitions="auto"
+                      ShowGridLines="False">
+                  <StackPanel Spacing="4"
+                              Grid.Column="0"
+                              Grid.Row="0">
+                    <Border Background="DimGray">
+                      <Grid ColumnDefinitions="auto, auto"
+                            RowDefinitions="auto, auto, auto, auto"
+                            Margin="8">
+                        <TextBlock FontSize="12"
+                                   Grid.Column="0"
+                                   Grid.Row="0"
+                                   VerticalAlignment="Center">
+                          Category:
+                        </TextBlock>
+
+                        <TextBox Focusable="False"
+                                 Grid.Column="1"
+                                 Grid.Row="0"
+                                 Width="150"
+                                 Margin="8"
+                                 Watermark="Category">
+                        </TextBox>
+
+                        <TextBlock FontSize="12"
+                                   Grid.Column="0"
+                                   Grid.Row="1"
+                                   VerticalAlignment="Center">
+                          Subcategory:
+                        </TextBlock>
+
+                        <TextBox Focusable="False"
+                                 Grid.Column="1"
+                                 Grid.Row="1"
+                                 Margin="8"
+                                 Watermark="Subcategory">
+                        </TextBox>
+
+                        <TextBlock FontSize="12"
+                                   Grid.Column="0"
+                                   Grid.Row="2"
+                                   VerticalAlignment="Center">
+                          Manufacturer:
+                        </TextBlock>
+
+                        <TextBox Focusable="False"
+                                 Grid.Column="1"
+                                 Grid.Row="2"
+                                 Margin="8"
+                                 Watermark="Manufacturer">
+                        </TextBox>
+
+                        <TextBlock FontSize="12"
+                                   Grid.Column="0"
+                                   Grid.Row="3"
+                                   VerticalAlignment="Center">
+                          Model:
+                        </TextBlock>
+
+                        <TextBox Focusable="False"
+                                 Grid.Column="1"
+                                 Grid.Row="3"
+                                 Margin="8"
+                                 Watermark="Model">
+                        </TextBox>
+                      </Grid>
+                    </Border>
+
+                    <Grid Grid.Column="0"
+                          Grid.Row="2">
+                      <Border Background="DimGray">
+                        <Grid ColumnDefinitions="auto, auto"
+                              RowDefinitions="auto, auto, auto, auto"
+                              Margin="8">
+                          <Label Content="Electrical:"
+                                 HorizontalAlignment="Center"
+                                 FontSize="12"
+                                 FontWeight="Bold"
+                                 Grid.ColumnSpan="2">
+                          </Label>
+
+                          <TextBlock FontSize="12"
+                                     Grid.Column="0"
+                                     Grid.Row="1"
+                                     VerticalAlignment="Center">
+                            Wattage:
+                          </TextBlock>
+
+                          <TextBox Focusable="False"
+                                   Grid.Column="1"
+                                   Grid.Row="1"
+                                   Width="150"
+                                   Margin="8"
+                                   Watermark="Wattage">
+                          </TextBox>
+
+                          <TextBlock FontSize="12"
+                                     Grid.Column="0"
+                                     Grid.Row="2"
+                                     VerticalAlignment="Center">
+                            Amperage:
+                          </TextBlock>
+
+                          <TextBox Focusable="False"
+                                   Grid.Column="1"
+                                   Grid.Row="2"
+                                   Margin="8"
+                                   Watermark="Amperage">
+                          </TextBox>
+
+                          <TextBlock FontSize="12"
+                                     Grid.Column="0"
+                                     Grid.Row="3"
+                                     VerticalAlignment="Center">
+                            Amperage:
+                          </TextBlock>
+
+                          <TextBox Focusable="False"
+                                   Grid.Column="1"
+                                   Grid.Row="3"
+                                   Margin="8"
+                                   Watermark="Amperage">
+                          </TextBox>
+                        </Grid>
+                      </Border>
+                    </Grid>
+                  </StackPanel>
+
+                  <StackPanel Grid.Column="1"
+                              MinWidth="5">
+                  </StackPanel>
+
+                  <StackPanel Grid.Column="2"
+                              Grid.Row="0"
+                              Spacing="4">
+                    <ScrollViewer Height="208">
+                      <Border Background="DimGray">
+                        <Grid HorizontalAlignment="Center"
+                              RowDefinitions="auto, auto, auto, auto, auto, auto"
+                              ColumnDefinitions="auto, auto"
+                              Margin="8">
+                          <Label Content="Physical:"
+                                 FontSize="12"
+                                 HorizontalAlignment="Center"
+                                 Grid.Row="0"
+                                 Grid.ColumnSpan="2"
+                                 FontWeight="Bold">
+                          </Label>
+
+                          <TextBlock FontSize="12"
+                                     Grid.Column="0"
+                                     Grid.Row="1"
+                                     VerticalAlignment="Center">
+                            Width:
+                          </TextBlock>
+
+                          <TextBox Focusable="False"
+                                   Grid.Column="1"
+                                   Grid.Row="1"
+                                   MinWidth="150"
+                                   Margin="8"
+                                   Watermark="Width">
+                          </TextBox>
+
+                          <TextBlock FontSize="12"
+                                     Grid.Column="0"
+                                     Grid.Row="2"
+                                     VerticalAlignment="Center">
+                            Height:
+                          </TextBlock>
+
+                          <TextBox Focusable="False"
+                                   Grid.Column="1"
+                                   Grid.Row="2"
+                                   Margin="8"
+                                   Watermark="Height">
+                          </TextBox>
+
+                          <TextBlock FontSize="12"
+                                     Grid.Column="0"
+                                     Grid.Row="3"
+                                     VerticalAlignment="Center">
+                            Length:
+                          </TextBlock>
+
+                          <TextBox Focusable="False"
+                                   Grid.Column="1"
+                                   Grid.Row="3"
+                                   Margin="8"
+                                   Watermark="Length">
+                          </TextBox>
+
+                          <TextBlock FontSize="12"
+                                     Grid.Column="0"
+                                     Grid.Row="4"
+                                     VerticalAlignment="Center">
+                            Weight:
+                          </TextBlock>
+
+                          <TextBox Focusable="False"
+                                   Grid.Column="1"
+                                   Grid.Row="4"
+                                   Margin="8"
+                                   Watermark="Weight">
+                          </TextBox>
+
+                          <TextBlock FontSize="12"
+                                     Grid.Column="0"
+                                     Grid.Row="5"
+                                     VerticalAlignment="Center">
+                            Cell Count:
+                          </TextBlock>
+
+                          <TextBox Focusable="False"
+                                   Grid.Column="1"
+                                   Grid.Row="5"
+                                   Margin="8"
+                                   Watermark="Cell Count">
+                          </TextBox>
+                        </Grid>
+                      </Border>
+                    </ScrollViewer>
+
+                    <ScrollViewer Height="180">
+                      <Border Background="DimGray">
+                        <Grid HorizontalAlignment="Center"
+                              ColumnDefinitions="auto, auto"
+                              RowDefinitions="auto, auto, auto, auto, auto, auto, auto"
+                              Margin="8">
+                          <Label Content="Asset Info:"
+                                 Grid.Row="0"
+                                 Grid.ColumnSpan="2"
+                                 HorizontalAlignment="Center"
+                                 FontSize="12"
+                                 FontWeight="Bold">
+                          </Label>
+
+                          <TextBlock FontSize="12"
+                                     Grid.Column="0"
+                                     Grid.Row="1"
+                                     VerticalAlignment="Center">
+                            Value:
+                          </TextBlock>
+
+                          <TextBox Focusable="False"
+                                   Grid.Column="1"
+                                   Grid.Row="1"
+                                   Width="150"
+                                   Margin="8"
+                                   Watermark="Value">
+                          </TextBox>
+
+                          <TextBlock FontSize="12"
+                                     Grid.Column="0"
+                                     Grid.Row="2"
+                                     VerticalAlignment="Center">
+                            Serial Number:
+                          </TextBlock>
+
+                          <TextBox Focusable="False"
+                                   Grid.Column="1"
+                                   Grid.Row="2"
+                                   Margin="8"
+                                   Watermark="Serial Number">
+                          </TextBox>
+
+                          <TextBlock FontSize="12"
+                                     Grid.Column="0"
+                                     Grid.Row="3"
+                                     VerticalAlignment="Center">
+                            Purchase Date:
+                          </TextBlock>
+
+                          <TextBox Focusable="False"
+                                   Grid.Column="1"
+                                   Grid.Row="3"
+                                   Margin="8"
+                                   Watermark="Purchase Date">
+                          </TextBox>
+
+                          <TextBlock FontSize="12"
+                                     Grid.Column="0"
+                                     Grid.Row="4"
+                                     VerticalAlignment="Center">
+                            Purchase PO:
+                          </TextBlock>
+
+                          <TextBox Focusable="False"
+                                   Grid.Column="1"
+                                   Grid.Row="4"
+                                   Margin="8"
+                                   Watermark="Purchase PO">
+                          </TextBox>
+
+                          <TextBlock FontSize="12"
+                                     Grid.Column="0"
+                                     Grid.Row="5"
+                                     VerticalAlignment="Center">
+                            Sell Date:
+                          </TextBlock>
+
+                          <TextBox Focusable="False"
+                                   Grid.Column="1"
+                                   Grid.Row="5"
+                                   Margin="8"
+                                   Watermark="Sell Date">
+                          </TextBox>
+
+                          <TextBlock FontSize="12"
+                                     Grid.Column="0"
+                                     Grid.Row="6"
+                                     VerticalAlignment="Center">
+                            Sell PO:
+                          </TextBlock>
+
+                          <TextBox Focusable="False"
+                                   Grid.Column="1"
+                                   Grid.Row="6"
+                                   Margin="8"
+                                   Watermark="Sell PO">
+                          </TextBox>
+                        </Grid>
+                      </Border>
+                    </ScrollViewer>
+                  </StackPanel>
+
+                  <StackPanel Grid.Column="3"
+                              MinWidth="5">
+                  </StackPanel>
+
+                  <StackPanel Grid.Column="4"
+                              Grid.Row="0"
+                              Spacing="4">
+                    <Image Height="250"
+                           Width="250"
+                           Source="avares://DatabaseManager/Resources/Assets/placeholder.png">
+                    </Image>
+
+                    <Grid ColumnDefinitions="83, 83, 83"
+                          RowDefinitions="auto">
+                      <Button Grid.Column="0"
+                              Grid.Row="0"
+                              HorizontalContentAlignment="Center"
+                              HorizontalAlignment="Stretch"
+                              Background="DimGray"
+                              FontSize="12">
+                        Manual
+                      </Button>
+
+                      <Button Grid.Column="1"
+                              Grid.Row="0"
+                              HorizontalContentAlignment="Center"
+                              HorizontalAlignment="Stretch"
+                              Background="DimGray"
+                              FontSize="12">
+                        Parts List
+                      </Button>
+
+                      <Button Grid.Column="2"
+                              Grid.Row="0"
+                              HorizontalContentAlignment="Center"
+                              HorizontalAlignment="Stretch"
+                              Background="DimGray"
+                              FontSize="12">
+                        Settings
+                      </Button>
+                    </Grid>
+
+                    <ScrollViewer Height="104">
+                      <Border Background="DimGray">
+                        <Grid ColumnDefinitions="auto, auto"
+                              RowDefinitions="auto, auto, auto, auto"
+                              Margin="8">
+                          <Label Grid.Column="0"
+                                 Grid.Row="0"
+                                 FontSize="12"
+                                 VerticalAlignment="Center">
+                            Maintenance Interval:
+                          </Label>
+
+                          <TextBox Grid.Column="1"
+                                   Grid.Row="0"
+                                   Watermark="Maint. Int"
+                                   Focusable="False"
+                                   MinWidth="100"
+                                   Margin="2"
+                                   FontSize="12">
+                          </TextBox>
+
+                          <Label Grid.Column="0"
+                                 Grid.Row="1"
+                                 FontSize="12"
+                                 VerticalAlignment="Center">
+                            Size:
+                          </Label>
+
+                          <TextBox Grid.Column="1"
+                                   Grid.Row="1"
+                                   Watermark="Size"
+                                   Focusable="False"
+                                   MinWidth="100"
+                                   Margin="2"
+                                   FontSize="12">
+                          </TextBox>
+
+                          <Label Grid.Column="0"
+                                 Grid.Row="2"
+                                 Grid.ColumnSpan="2"
+                                 FontSize="12"
+                                 VerticalAlignment="Center">
+                            Note:
+                          </Label>
+
+                          <TextBox Grid.Column="0"
+                                   Grid.Row="3"
+                                   Grid.ColumnSpan="2"
+                                   Watermark="Notes"
+                                   Focusable="False"
+                                   Margin="2"
+                                   FontSize="12"
+                                   AcceptsReturn="True"
+                                   MinWidth="225"
+                                   MaxWidth="225">
+                          </TextBox>
+                        </Grid>
+                      </Border>
+                    </ScrollViewer>
+                  </StackPanel>
+
+                  <StackPanel Grid.Column="5"
+                              MinWidth="5">
+                  </StackPanel>
+
+                  <StackPanel Grid.Column="6"
+                              Grid.Row="0"
+                              Spacing="4">
+                    <Border Background="DimGray">
+                      <Grid ColumnDefinitions="140"
+                            RowDefinitions="auto, auto, auto, auto, auto, auto, auto, auto"
+                            Margin="8">
+                        <Label Content="LX ID:"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"
+                               Grid.Row="0">
+                        </Label>
+
+                        <TextBox Grid.Row="1"
+                                 Watermark="Id"
+                                 HorizontalContentAlignment="Center"
+                                 FontSize="12"
+                                 Focusable="False">
+                        </TextBox>
+
+                        <Label Content="Status:"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"
+                               Grid.Row="2">
+                        </Label>
+
+                        <TextBox Grid.Row="3"
+                                 Watermark="Status"
+                                 HorizontalContentAlignment="Center"
+                                 FontSize="12"
+                                 Focusable="False">
+                        </TextBox>
+
+                        <Label Content="Group:"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"
+                               Grid.Row="4">
+                        </Label>
+
+                        <TextBox Grid.Row="5"
+                                 Watermark="Group"
+                                 HorizontalContentAlignment="Center"
+                                 FontSize="12"
+                                 Focusable="False">
+                        </TextBox>
+
+                        <Label Content="Location:"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"
+                               Grid.Row="6">
+                        </Label>
+
+                        <TextBox Grid.Row="7"
+                                 Watermark="Storage Location"
+                                 HorizontalContentAlignment="Center"
+                                 FontSize="12"
+                                 Focusable="False">
+                        </TextBox>
+                      </Grid>
+                    </Border>
+
+                    <Button Background="DimGray"
+                            Width="165"
+                            Content="Edit Item"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="12">
+                    </Button>
+
+                    <Button Background="DimGray"
+                            Width="165"
+                            Content="Print Item Card"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="12">
+                    </Button>
+                  </StackPanel>
+                </Grid>
+              </StackPanel>
+            </Viewbox>
+          </TabItem>
+
+          <TabItem Header="NFG Dashboard"
+                   FontSize="14">
+            <StackPanel Margin="8">
+              <TextBlock>qwe</TextBlock>
+            </StackPanel>
+          </TabItem>
+
+          <TabItem Header="Safety Dashboard"
+                   FontSize="14">
+            <StackPanel Margin="8">
+              <TextBlock>ewq</TextBlock>
+            </StackPanel>
+          </TabItem>
+
+          <TabItem Header="Shopping Dashboard"
+                   FontSize="14">
+            <StackPanel Margin="8">
+              <TextBlock>Dagan</TextBlock>
+            </StackPanel>
+          </TabItem>
+        </TabControl>
+      </DockPanel>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>
