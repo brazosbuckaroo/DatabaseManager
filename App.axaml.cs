@@ -15,7 +15,7 @@ public partial class App : Application
     /// An <see cref="ISettings"/> onject meant to load the saved settings from 
     /// a file and put them in memory.
     /// </summary>
-    private ISettings _settingsViewModel = new ApplicationSettingsViewModel();
+    private readonly ISettings _settingsViewModel = new ApplicationSettingsViewModel();
     #endregion
 
     public override void Initialize()

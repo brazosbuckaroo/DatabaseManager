@@ -6,15 +6,11 @@ namespace DatabaseManager.ViewModels;
 public class DashboardViewModel : ViewModelBase, IRoutableViewModel
 {
     #region PROPERTIES
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <inheritdoc/>
     public IScreen HostScreen { get; }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public string UrlPathSegment { get; } = Guid.NewGuid().ToString().Substring(0, 3);
+    /// <inheritdoc/>
+    public string UrlPathSegment { get; } = Guid.NewGuid().ToString().Substring(0, 5);
     #endregion
 
     #region CONSTRUCTORS

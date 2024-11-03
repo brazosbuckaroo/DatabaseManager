@@ -12,6 +12,8 @@ using System.Collections.ObjectModel;
 using DatabaseManager.Models.Types;
 using DatabaseManager.Models.Services;
 using System.Reactive;
+using DatabaseManager.Views;
+using System.Reactive.Disposables;
 
 namespace DatabaseManager.ViewModels;
 
@@ -29,9 +31,7 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
     /// </summary>
     public Interaction<LoginSettingsWindowViewModel, ApplicationSettingsViewModel> LoginSettingsInteraction { get; }
 
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <inheritdoc/>
     public IScreen HostScreen { get; }
 
     /// <summary>
@@ -39,10 +39,8 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
     /// </summary>
     public ISettings Settings { get; set; }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public string UrlPathSegment { get; } = Guid.NewGuid().ToString().Substring(0, 3);
+    /// <inheritdoc/>
+    public string UrlPathSegment { get; } = Guid.NewGuid().ToString().Substring(0, 5);
     #endregion
 
     #region COMMANDS
@@ -71,11 +69,12 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
     /// <param name="settingsProvider">
     /// An <see cref="ISettings"/> meant to allow the ability to edit, save, and read settings.
     /// </param>
-    public LoginViewModel(ISettings settingsProvider)
+    public LoginViewModel(ISettings settingsProvider, IScreen screen)
     {
         this.LoginSettingsInteraction = new Interaction<LoginSettingsWindowViewModel, ApplicationSettingsViewModel>();
         this.OpenLoginSettingsCommand = ReactiveCommand.CreateFromTask(OpenLoginSettingsDialogAsync);
         this.Settings = settingsProvider;
+        this.HostScreen = screen;
     }
     #endregion
 

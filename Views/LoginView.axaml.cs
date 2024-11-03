@@ -7,10 +7,16 @@ using ReactiveUI;
 
 namespace DatabaseManager.Views;
 
-public partial class LoginView : UserControl
+public partial class LoginView : ReactiveUserControl<LoginViewModel>
 {
     public LoginView()
     {
-        InitializeComponent();
+        this.InitializeComponent();
+
+        this.WhenActivated(disposables => 
+        {
+        });
+
+        AvaloniaXamlLoader.Load(this);
     }
 }

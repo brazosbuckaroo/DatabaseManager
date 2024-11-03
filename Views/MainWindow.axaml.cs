@@ -1,6 +1,9 @@
-﻿using Avalonia.ReactiveUI;
+﻿using Avalonia.Markup.Xaml;
+using Avalonia.ReactiveUI;
 using DatabaseManager.ViewModels;
 using ReactiveUI;
+using System.Diagnostics;
+using System.Reactive.Disposables;
 using System.Threading.Tasks;
 
 namespace DatabaseManager.Views;
@@ -16,12 +19,14 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     /// </summary>
     public MainWindow()
     {
-        InitializeComponent();
+        this.InitializeComponent();
 
-        this.WhenActivated(action =>
+        this.WhenActivated(disposables =>
         {
-            action(ViewModel!.LoginViewModel.LoginSettingsInteraction.RegisterHandler(this.DoShowLoginSettingsDialogAsync));
+            disposables(ViewModel!.LoginViewModel.LoginSettingsInteraction.RegisterHandler(this.DoShowLoginSettingsDialogAsync));
         });
+
+        AvaloniaXamlLoader.Load(this);
     }
     #endregion
 

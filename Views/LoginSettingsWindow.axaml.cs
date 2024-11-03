@@ -26,7 +26,7 @@ public partial class LoginSettingsWindow : ReactiveWindow<LoginSettingsWindowVie
     /// </summary>
     public LoginSettingsWindow()
     {
-        InitializeComponent();
+        this.InitializeComponent();
 
         this.WhenActivated(action =>
         {
@@ -35,6 +35,8 @@ public partial class LoginSettingsWindow : ReactiveWindow<LoginSettingsWindowVie
             action(ViewModel!.AcceptSettingsCommand.Subscribe(this.Close));
             action(ViewModel!.CancelCommand.Subscribe(this.Close));
         });
+
+        AvaloniaXamlLoader.Load(this);
     }
     #endregion
 
