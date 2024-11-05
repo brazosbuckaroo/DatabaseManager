@@ -1,4 +1,4 @@
-<Window 
+<Window
         xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -17,10 +17,12 @@
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
     <vm:MainWindowViewModel />
   </Design.DataContext>
-  
-  <rxui:RoutedViewHost Router="{Binding Router}">
-    <rxui:RoutedViewHost.ViewLocator>
-      <types:AppViewLocator></types:AppViewLocator>
-    </rxui:RoutedViewHost.ViewLocator>
-  </rxui:RoutedViewHost>
- </Window>
+
+  <StackPanel Spacing="10">
+    <rxui:RoutedViewHost Router="{Binding Router}">
+      <rxui:RoutedViewHost.ViewLocator>
+        <types:AppViewLocator></types:AppViewLocator>
+      </rxui:RoutedViewHost.ViewLocator>
+    </rxui:RoutedViewHost>
+  </StackPanel>
+</Window>

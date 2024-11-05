@@ -41,6 +41,11 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
 
     /// <inheritdoc/>
     public string UrlPathSegment { get; } = Guid.NewGuid().ToString().Substring(0, 5);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public DashboardViewModel DashboardView { get; }
     #endregion
 
     #region COMMANDS
@@ -48,6 +53,11 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
     /// A <see cref="ICommand"/> meant to be used in the UI to open settings.
     /// </summary>
     public ICommand OpenLoginSettingsCommand { get; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public ReactiveCommand<Unit, IRoutableViewModel> LoginCommand { get; }
     #endregion
 
     #region CONSTRUCTORS
@@ -60,6 +70,8 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
         this.LoginSettingsInteraction = new Interaction<LoginSettingsWindowViewModel, ApplicationSettingsViewModel>();
         this.OpenLoginSettingsCommand = ReactiveCommand.CreateFromTask(OpenLoginSettingsDialogAsync);
         this.Settings = new ApplicationSettingsViewModel();
+        this.DashboardView = new DashboardViewModel();
+        this.LoginCommand = ReactiveCommand.CreateFromObservable(Login);
     }
 
     /// <summary>
@@ -69,10 +81,12 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
     /// <param name="settingsProvider">
     /// An <see cref="ISettings"/> meant to allow the ability to edit, save, and read settings.
     /// </param>
-    public LoginViewModel(ISettings settingsProvider, IScreen screen)
+    public LoginViewModel(ISettings settingsProvider, IScreen screen, DashboardViewModel dashboardViewModel)
     {
         this.LoginSettingsInteraction = new Interaction<LoginSettingsWindowViewModel, ApplicationSettingsViewModel>();
         this.OpenLoginSettingsCommand = ReactiveCommand.CreateFromTask(OpenLoginSettingsDialogAsync);
+        this.DashboardView = dashboardViewModel;
+        this.LoginCommand = ReactiveCommand.CreateFromObservable(Login);
         this.Settings = settingsProvider;
         this.HostScreen = screen;
     }
@@ -95,6 +109,17 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
         await dialog.ReadSettingsFromFileAsync();
 
         this.Settings = await LoginSettingsInteraction.Handle(dialog);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>
+    /// 
+    /// </returns>
+    private IObservable<IRoutableViewModel> Login()
+    {
+        return this.HostScreen.Router.Navigate.Execute(DashboardView);
     }
     #endregion
 }

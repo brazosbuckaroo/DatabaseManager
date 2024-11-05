@@ -39,13 +39,6 @@ public class MainWindowViewModel : ViewModelBase, IScreen
     public DashboardViewModel DashboardViewModel { get; }
     #endregion
 
-    #region COMMANDS
-    /// <summary>
-    /// An <see cref="ReactiveCommand{Unit, IRoutableViewModel}"/> 
-    /// </summary>
-    public ReactiveCommand<Unit, IRoutableViewModel> LoginCommand { get; }
-    #endregion
-
     #region CONSTRUCTORS
     /// <summary>
     /// The default constructor that makes the <see cref="MainWindowViewModel"/> with 
@@ -68,16 +61,13 @@ public class MainWindowViewModel : ViewModelBase, IScreen
     /// <param name="settingsProvider"></param>
     public MainWindowViewModel(ISettings settingsProvider)
     {
-        this.LoginViewModel = new LoginViewModel(settingsProvider, this);
         this.DashboardViewModel = new DashboardViewModel(this);
+        this.LoginViewModel = new LoginViewModel(settingsProvider, this, DashboardViewModel);
         this.LoginSettingsWindowViewModel = new LoginSettingsWindowViewModel();
 
         Router.Navigate.Execute(LoginViewModel);
 
         this.WhenActivated((CompositeDisposable disposables) => { });
     }
-    #endregion
-
-    #region METHODS
     #endregion
 }

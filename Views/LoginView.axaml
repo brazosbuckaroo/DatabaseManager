@@ -42,7 +42,8 @@
               HorizontalAlignment="Stretch"
               HorizontalContentAlignment="Center"
               Background="DimGray"
-              FontSize="12">
+              FontSize="12"
+              Command="{Binding LoginCommand}">
       </Button>
     </StackPanel>
   </StackPanel>
