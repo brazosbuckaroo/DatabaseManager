@@ -17,7 +17,7 @@ namespace DatabaseManager.ViewModels;
 /// A class meant to contain all the ViewModels that the <see cref="MainWindow"/>
 /// is meant to know about.
 /// </summary>
-public class MainWindowViewModel : ViewModelBase, IScreen
+public class MainWindowViewModel : ReactiveObject, IScreen
 {
     #region PROPERTIES
     /// <inheritdoc/>
@@ -51,8 +51,6 @@ public class MainWindowViewModel : ViewModelBase, IScreen
         this.LoginSettingsWindowViewModel = new LoginSettingsWindowViewModel();
 
         Router.Navigate.Execute(LoginViewModel);
-
-        this.WhenActivated((CompositeDisposable disposables) => { });
     }
 
     /// <summary>
@@ -69,8 +67,6 @@ public class MainWindowViewModel : ViewModelBase, IScreen
         this.LoginSettingsWindowViewModel = new LoginSettingsWindowViewModel();
 
         Router.Navigate.Execute(LoginViewModel);
-
-        this.WhenActivated((CompositeDisposable disposables) => { });
     }
     #endregion
 }
