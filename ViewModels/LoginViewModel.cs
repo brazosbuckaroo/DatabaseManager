@@ -43,19 +43,21 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
     public string UrlPathSegment { get; } = Guid.NewGuid().ToString().Substring(0, 5);
 
     /// <summary>
-    /// 
+    /// A <see cref="DashboardViewModel"/> used to load the 
+    /// application's main dashboard.
     /// </summary>
     public DashboardViewModel DashboardView { get; }
     #endregion
 
     #region COMMANDS
     /// <summary>
-    /// A <see cref="ICommand"/> meant to be used in the UI to open settings.
+    /// A <see cref="ReactiveCommand"/> meant to be used in the UI to open settings.
     /// </summary>
-    public ICommand OpenLoginSettingsCommand { get; }
+    public ReactiveCommand<Unit, Unit> OpenLoginSettingsCommand { get; }
 
     /// <summary>
-    /// 
+    /// A <see cref="ReactiveCommand"/> meant to run the verifcation
+    /// service and load the dashboard if verifcation is successful.
     /// </summary>
     public ReactiveCommand<Unit, IRoutableViewModel> LoginCommand { get; }
     #endregion
@@ -80,6 +82,13 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
     /// </summary>
     /// <param name="settingsProvider">
     /// An <see cref="ISettings"/> meant to allow the ability to edit, save, and read settings.
+    /// </param>
+    /// <param name="screen">
+    /// The <see cref="MainWindow"/> that is hosting the view to allow for navigate to the
+    /// next view.
+    /// </param>
+    /// <param name="dashboardViewModel">
+    /// The <see cref="DashboardViewModel"/> passed from the <see cref="MainWindow"/>.
     /// </param>
     public LoginViewModel(ISettings settingsProvider, IScreen screen, DashboardViewModel dashboardViewModel)
     {
@@ -112,14 +121,16 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
     }
 
     /// <summary>
-    /// 
+    /// The method that will verify a user's credentials and load the next view
+    /// if they are verified.
     /// </summary>
     /// <returns>
-    /// 
+    /// A <see cref="IObservable{DashboardViewModel}"/> meant to be the
+    /// applications main dashboard.
     /// </returns>
     private IObservable<IRoutableViewModel> Login()
     {
-        return this.HostScreen.Router.Navigate.Execute(DashboardView);
+        return this.HostScreen.Router.Navigate.Execute(this.DashboardView);
     }
     #endregion
 }

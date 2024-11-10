@@ -56,9 +56,12 @@ public class MainWindowViewModel : ViewModelBase, IScreen
     }
 
     /// <summary>
-    /// 
+    /// A constructor for <see cref="MainWindowViewModel"/> that allows for
+    /// dependency injection.
     /// </summary>
-    /// <param name="settingsProvider"></param>
+    /// <param name="settingsProvider">
+    /// The service meant for loading, reading, and editing application settings
+    /// </param>
     public MainWindowViewModel(ISettings settingsProvider)
     {
         this.DashboardViewModel = new DashboardViewModel(this);
