@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseManager", "DatabaseManager.csproj", "{8445CF9A-9CBD-499D-8AE9-DD192D0DF8F9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseManager.Desktop", "DatabaseManager.Desktop\DatabaseManager.Desktop.csproj", "{89778A0E-D48F-4FDA-946B-9286964DBD67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseManager.Desktop", "..\DatabaseManager.Desktop\DatabaseManager.Desktop.csproj", "{A11928CC-6104-4A64-B52A-A8661A2BC3EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{8445CF9A-9CBD-499D-8AE9-DD192D0DF8F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8445CF9A-9CBD-499D-8AE9-DD192D0DF8F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8445CF9A-9CBD-499D-8AE9-DD192D0DF8F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{89778A0E-D48F-4FDA-946B-9286964DBD67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{89778A0E-D48F-4FDA-946B-9286964DBD67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{89778A0E-D48F-4FDA-946B-9286964DBD67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{89778A0E-D48F-4FDA-946B-9286964DBD67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A11928CC-6104-4A64-B52A-A8661A2BC3EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A11928CC-6104-4A64-B52A-A8661A2BC3EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A11928CC-6104-4A64-B52A-A8661A2BC3EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A11928CC-6104-4A64-B52A-A8661A2BC3EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
