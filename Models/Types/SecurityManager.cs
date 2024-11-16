@@ -29,8 +29,6 @@ public class SecurityManager : ISecurity
         }
         catch (FbException error)
         {
-            Debug.WriteLine(error.Message);
-
             return false;
         }
 

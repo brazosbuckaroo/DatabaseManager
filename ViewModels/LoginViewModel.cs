@@ -1,20 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Reactive.Linq;
-using System.Windows.Input;
-using ReactiveUI;
-using FirebirdSql.Data.FirebirdClient;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using DynamicData.Binding;
-using System.Collections.ObjectModel;
-using DatabaseManager.Models.Types;
 using DatabaseManager.Models.Services;
-using System.Reactive;
+using DatabaseManager.Models.Types;
 using DatabaseManager.Views;
-using System.Reactive.Disposables;
-using System.Reactive.Threading.Tasks;
+using FirebirdSql.Data.FirebirdClient;
+using ReactiveUI;
+using System;
+using System.Reactive;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace DatabaseManager.ViewModels;
 
@@ -145,7 +138,7 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
     /// <param name="dashboardViewModel">
     /// The <see cref="DashboardViewModel"/> passed from the <see cref="MainWindow"/>.
     /// </param>
-    public LoginViewModel(ISettings settingsProvider, 
+    public LoginViewModel(ISettings settingsProvider,
                           IScreen screen,
                           ISecurity securityProvider,
                           DashboardViewModel dashboardViewModel)
@@ -214,7 +207,7 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
 
         this.DashboardView = new DashboardViewModel(this.HostScreen, this.ConnectionString);
 
-        return await this.HostScreen.Router.Navigate.Execute(this.DashboardView);    
+        return await this.HostScreen.Router.Navigate.Execute(this.DashboardView);
     }
     #endregion
 }
