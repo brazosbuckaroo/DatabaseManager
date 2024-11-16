@@ -3,7 +3,7 @@
 using Avalonia;
 using Avalonia.ReactiveUI;
 
-namespace DatabaseManager.Desktop; 
+namespace DatabaseManager.Platforms.Desktop; 
 
 class Program
 {
