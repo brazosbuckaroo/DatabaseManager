@@ -4,6 +4,7 @@ using DatabaseManager.Views;
 using FirebirdSql.Data.FirebirdClient;
 using ReactiveUI;
 using System;
+using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -180,11 +181,19 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
         await dialog.GetCharacterSetsAsync();
         await dialog.ReadSettingsFromFileAsync();
 
-        this.SettingsService = await LoginSettingsInteraction.Handle(dialog);
-        this.ConnectionString = new FbConnectionStringBuilder();
-        this.ConnectionString.Charset = this.SettingsService.Settings.CharacterSet;
-        this.ConnectionString.DataSource = this.SettingsService.Settings.IpAddress;
-        this.ConnectionString.Database = this.SettingsService.Settings.DatabaseSource;
+        ISettings settingsService = await LoginSettingsInteraction.Handle(dialog);
+
+        // hacky ???????????????????
+        // TODO: Look into a better way of handling the 
+        //       UnhandledInteractionErrorException
+        if (settingsService != null)
+        {
+            this.SettingsService = settingsService;
+            this.ConnectionString = new FbConnectionStringBuilder();
+            this.ConnectionString.Charset = this.SettingsService.Settings.CharacterSet;
+            this.ConnectionString.DataSource = this.SettingsService.Settings.IpAddress;
+            this.ConnectionString.Database = this.SettingsService.Settings.DatabaseSource;
+        }
     }
 
     /// <summary>

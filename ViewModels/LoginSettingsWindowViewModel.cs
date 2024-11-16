@@ -194,7 +194,7 @@ public class LoginSettingsWindowViewModel : ViewModelBase
             {
                 CharacterSets.Add(word.Trim());
             }
-        });
+        }).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -205,7 +205,7 @@ public class LoginSettingsWindowViewModel : ViewModelBase
     /// </returns>
     public async Task ReadSettingsFromFileAsync()
     {
-        await this._settingsViewModel.ReadFromFileAsync();
+        await this._settingsViewModel.ReadFromFileAsync().ConfigureAwait(false);
 
         this.IpAddress = this._settingsViewModel.Settings.IpAddress;
         this.DatabaseFilePath = this._settingsViewModel.Settings.DatabaseSource;
@@ -283,7 +283,7 @@ public class LoginSettingsWindowViewModel : ViewModelBase
                                                                    this.SelectedCharacterSet.Trim(), 
                                                                    this.DatabaseFilePath.Trim());
         
-        await this._settingsViewModel.SaveToFileAsync(cancellation);
+        await this._settingsViewModel.SaveToFileAsync(cancellation).ConfigureAwait(false);
 
         return this._settingsViewModel;
     }

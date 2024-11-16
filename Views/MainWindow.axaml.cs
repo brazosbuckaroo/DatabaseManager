@@ -48,7 +48,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 
         dialog.DataContext = context.Input;
 
-        context.SetOutput(await dialog.ShowDialog<ApplicationSettingsViewModel>(this));
+        context.SetOutput(await dialog.ShowDialog<ApplicationSettingsViewModel>(this).ConfigureAwait(false));
     }
     #endregion
 }

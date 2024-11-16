@@ -28,12 +28,12 @@ public partial class LoginSettingsWindow : ReactiveWindow<LoginSettingsWindowVie
     {
         this.InitializeComponent();
 
-        this.WhenActivated(action =>
+        this.WhenActivated(disposables =>
         {
-            action(ViewModel!.FileExplorerDialog.RegisterHandler(this.OpenFileExplorerAsync));
-            action(ViewModel!.FolderExplorerDialog.RegisterHandler(this.OpenFolderExplorerAsync));
-            action(ViewModel!.AcceptSettingsCommand.Subscribe(this.Close));
-            action(ViewModel!.CancelCommand.Subscribe(this.Close));
+            disposables(ViewModel!.FileExplorerDialog.RegisterHandler(this.OpenFileExplorerAsync));
+            disposables(ViewModel!.FolderExplorerDialog.RegisterHandler(this.OpenFolderExplorerAsync));
+            disposables(ViewModel!.AcceptSettingsCommand.Subscribe(this.Close));
+            disposables(ViewModel!.CancelCommand.Subscribe(this.Close));
         });
 
         AvaloniaXamlLoader.Load(this);
@@ -62,7 +62,7 @@ public partial class LoginSettingsWindow : ReactiveWindow<LoginSettingsWindowVie
                 AllowMultiple = false,
                 Title = context.Input
             }
-        );
+        ).ConfigureAwait(false);
 
         // if the user didnt select anything, give an empty
         // string
@@ -90,7 +90,7 @@ public partial class LoginSettingsWindow : ReactiveWindow<LoginSettingsWindowVie
                 AllowMultiple = false,
                 Title = context.Input
             }
-        );
+        ).ConfigureAwait(false);
 
         context.SetOutput((folder.Count == 0) ? string.Empty : folder.SingleOrDefault()!.TryGetLocalPath()!);
     }

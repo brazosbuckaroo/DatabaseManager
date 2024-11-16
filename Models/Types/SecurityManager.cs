@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,11 +22,17 @@ public class SecurityManager : ISecurity
     /// <inheritdoc/>
     public async Task<bool> VerifyCredentialsAsync(FbConnectionStringBuilder connectionString)
     {
+        if (connectionString.DataSource == string.Empty || 
+            IPAddress.TryParse(connectionString.DataSource, out IPAddress? _))
+        {
+            return false;
+        }
+
         try
         {
             FbSecurity security = new FbSecurity();
             security.ConnectionString = connectionString.ToString();
-            FbUserData userData = await security.DisplayUserAsync(connectionString.UserID);
+            FbUserData userData = await security.DisplayUserAsync(connectionString.UserID).ConfigureAwait(false);
         }
         catch (FbException error)
         {
@@ -42,7 +49,7 @@ public class SecurityManager : ISecurity
 
         using (FbConnection connection = new FbConnection(connectionString.ToString()))
         {
-            await connection.OpenAsync();
+            await connection.OpenAsync().ConfigureAwait(false);
 
             await using (FbTransaction transaction = connection.BeginTransaction())
             {
@@ -54,9 +61,9 @@ public class SecurityManager : ISecurity
 
                 await command.PrepareAsync();
 
-                FbDataReader reader = await command.ExecuteReaderAsync();
+                FbDataReader reader = await command.ExecuteReaderAsync().ConfigureAwait(false);
 
-                if (await reader.ReadAsync())
+                if (await reader.ReadAsync().ConfigureAwait(false))
                 { 
                     isAdmin = (bool)reader.GetValue(0);
                 }
