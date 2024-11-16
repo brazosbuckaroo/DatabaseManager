@@ -29,13 +29,15 @@
                 HorizontalAlignment="Center">
       <TextBox Watermark="Enter Username"
                Width="200"
-               FontSize="12">
+               FontSize="12"
+               Text="{Binding Username}">
       </TextBox>
 
       <TextBox Watermark="Enter Password"
                PasswordChar="*"
                Width="200"
-               FontSize="12">
+               FontSize="12"
+               Text="{Binding Password}">
       </TextBox>
 
       <Button Content="Login"

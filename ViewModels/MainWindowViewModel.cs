@@ -60,10 +60,14 @@ public class MainWindowViewModel : ReactiveObject, IScreen
     /// <param name="settingsProvider">
     /// The service meant for loading, reading, and editing application settings
     /// </param>
-    public MainWindowViewModel(ISettings settingsProvider)
+    /// <param name="securityProvider">
+    /// The services meant to provide the ability to validate users and confirm 
+    /// admin priveleges
+    /// </param>
+    public MainWindowViewModel(ISettings settingsProvider, ISecurity securityProvider)
     {
         this.DashboardViewModel = new DashboardViewModel(this);
-        this.LoginViewModel = new LoginViewModel(settingsProvider, this, DashboardViewModel);
+        this.LoginViewModel = new LoginViewModel(settingsProvider, this, securityProvider, DashboardViewModel);
         this.LoginSettingsWindowViewModel = new LoginSettingsWindowViewModel();
 
         Router.Navigate.Execute(LoginViewModel);

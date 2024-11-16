@@ -277,11 +277,11 @@ public class LoginSettingsWindowViewModel : ViewModelBase
     /// </returns>
     private async Task<ApplicationSettingsViewModel> SaveApplicationLoginSettings(CancellationToken cancellation = default)
     {
-        this._settingsViewModel.Settings = new ApplicationSettings(this.IpAddress,
-                                                                   this.ImagesFolderPath, 
-                                                                   this.ManualFolderPath, 
-                                                                   this.SelectedCharacterSet, 
-                                                                   this.DatabaseFilePath);
+        this._settingsViewModel.Settings = new ApplicationSettings(this.IpAddress.Trim(),
+                                                                   this.ImagesFolderPath.Trim(), 
+                                                                   this.ManualFolderPath.Trim(), 
+                                                                   this.SelectedCharacterSet.Trim(), 
+                                                                   this.DatabaseFilePath.Trim());
         
         await this._settingsViewModel.SaveToFileAsync(cancellation);
 

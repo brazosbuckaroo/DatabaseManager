@@ -14,6 +14,7 @@ using DatabaseManager.Models.Services;
 using System.Reactive;
 using DatabaseManager.Views;
 using System.Reactive.Disposables;
+using System.Reactive.Threading.Tasks;
 
 namespace DatabaseManager.ViewModels;
 
@@ -37,7 +38,7 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
     /// <summary>
     /// A <see cref="ISettings"/> used to get application settings and whathave you.
     /// </summary>
-    public ISettings Settings { get; set; }
+    public ISettings SettingsService { get; private set; }
 
     /// <inheritdoc/>
     public string UrlPathSegment { get; } = Guid.NewGuid().ToString().Substring(0, 5);
@@ -46,7 +47,53 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
     /// A <see cref="DashboardViewModel"/> used to load the 
     /// application's main dashboard.
     /// </summary>
-    public DashboardViewModel DashboardView { get; }
+    public DashboardViewModel DashboardView { get; private set; }
+
+    /// <summary>
+    /// The Applications security manager to provide
+    /// a way to verfiy login and admin status.
+    /// </summary>
+    public ISecurity SecurityManager { get; }
+
+    /// <summary>
+    /// The connection string meant to be used to connect to
+    /// the Firebird SQL Server.
+    /// </summary>
+    public FbConnectionStringBuilder ConnectionString { get; private set; }
+
+    /// <summary>
+    /// The observable property to be used to allow
+    /// users to change it via the UI.
+    /// </summary>
+    public string Username
+    {
+        get => this._username;
+        set => this.RaiseAndSetIfChanged(ref _username, value);
+    }
+
+    /// <summary>
+    /// The observable property to be used to allow
+    /// users to change it via the UI.
+    /// </summary>
+    public string Password
+    {
+        get => this._password;
+        set => this.RaiseAndSetIfChanged(ref _password, value);
+    }
+    #endregion
+
+    #region FIELDS
+    /// <summary>
+    /// The backing fields for the <see cref="LoginViewModel.Username"/>
+    /// observable property.
+    /// </summary>
+    private string _username;
+
+    /// <summary>
+    /// The backing fields for the <see cref="LoginViewModel.Password"/>
+    /// observable property.
+    /// </summary>
+    private string _password;
     #endregion
 
     #region COMMANDS
@@ -65,15 +112,19 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
     #region CONSTRUCTORS
     /// <summary>
     /// A constructor that that makes the ViewModel's <see cref="Interaction{LoginSettingsWindowViewModel, ApplicationSettingsViewModel}"/>
-    /// and creates an <see cref="async"/> command.
+    /// and creates the <see cref="ReactiveCommand"/>.
     /// </summary>
     public LoginViewModel()
     {
         this.LoginSettingsInteraction = new Interaction<LoginSettingsWindowViewModel, ApplicationSettingsViewModel>();
         this.OpenLoginSettingsCommand = ReactiveCommand.CreateFromTask(OpenLoginSettingsDialogAsync);
-        this.Settings = new ApplicationSettingsViewModel();
+        this.SettingsService = new ApplicationSettingsViewModel();
+        this.SecurityManager = new SecurityManager();
         this.DashboardView = new DashboardViewModel();
-        this.LoginCommand = ReactiveCommand.CreateFromObservable(Login);
+        this.ConnectionString = new FbConnectionStringBuilder();
+        this._password = string.Empty;
+        this._username = string.Empty;
+        this.LoginCommand = ReactiveCommand.CreateFromTask<IRoutableViewModel>(Login);
     }
 
     /// <summary>
@@ -87,17 +138,36 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
     /// The <see cref="MainWindow"/> that is hosting the view to allow for navigate to the
     /// next view.
     /// </param>
+    /// <param name="securityProvider">
+    /// The security service meant to be used to allow the application to 
+    /// verfiy users and admin priveleges.
+    /// </param>
     /// <param name="dashboardViewModel">
     /// The <see cref="DashboardViewModel"/> passed from the <see cref="MainWindow"/>.
     /// </param>
-    public LoginViewModel(ISettings settingsProvider, IScreen screen, DashboardViewModel dashboardViewModel)
+    public LoginViewModel(ISettings settingsProvider, 
+                          IScreen screen,
+                          ISecurity securityProvider,
+                          DashboardViewModel dashboardViewModel)
     {
         this.LoginSettingsInteraction = new Interaction<LoginSettingsWindowViewModel, ApplicationSettingsViewModel>();
         this.OpenLoginSettingsCommand = ReactiveCommand.CreateFromTask(OpenLoginSettingsDialogAsync);
         this.DashboardView = dashboardViewModel;
-        this.LoginCommand = ReactiveCommand.CreateFromObservable(Login);
-        this.Settings = settingsProvider;
+        this.SettingsService = settingsProvider;
         this.HostScreen = screen;
+        this.SecurityManager = securityProvider;
+        this.ConnectionString = new FbConnectionStringBuilder();
+        this._username = string.Empty;
+        this._password = string.Empty;
+
+        // making the connection string
+        this.ConnectionString.UserID = this._username;
+        this.ConnectionString.Password = this.Password;
+        this.ConnectionString.Charset = this.SettingsService.Settings.CharacterSet;
+        this.ConnectionString.DataSource = this.SettingsService.Settings.IpAddress;
+        this.ConnectionString.Database = this.SettingsService.Settings.DatabaseSource;
+
+        this.LoginCommand = ReactiveCommand.CreateFromTask<IRoutableViewModel>(Login);
     }
     #endregion
 
@@ -117,7 +187,11 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
         await dialog.GetCharacterSetsAsync();
         await dialog.ReadSettingsFromFileAsync();
 
-        this.Settings = await LoginSettingsInteraction.Handle(dialog);
+        this.SettingsService = await LoginSettingsInteraction.Handle(dialog);
+        this.ConnectionString = new FbConnectionStringBuilder();
+        this.ConnectionString.Charset = this.SettingsService.Settings.CharacterSet;
+        this.ConnectionString.DataSource = this.SettingsService.Settings.IpAddress;
+        this.ConnectionString.Database = this.SettingsService.Settings.DatabaseSource;
     }
 
     /// <summary>
@@ -128,9 +202,19 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
     /// A <see cref="IObservable{DashboardViewModel}"/> meant to be the
     /// applications main dashboard.
     /// </returns>
-    private IObservable<IRoutableViewModel> Login()
+    private async Task<IRoutableViewModel> Login()
     {
-        return this.HostScreen.Router.Navigate.Execute(this.DashboardView);
+        this.ConnectionString.UserID = this.Username;
+        this.ConnectionString.Password = this.Password;
+
+        if (!await SecurityManager.VerifyCredentialsAsync(this.ConnectionString))
+        {
+            return await this.HostScreen.Router.Navigate.Execute(this);
+        }
+
+        this.DashboardView = new DashboardViewModel(this.HostScreen, this.ConnectionString);
+
+        return await this.HostScreen.Router.Navigate.Execute(this.DashboardView);    
     }
     #endregion
 }

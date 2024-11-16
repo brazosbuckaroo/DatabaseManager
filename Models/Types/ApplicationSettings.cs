@@ -21,10 +21,12 @@ public record ApplicationSettings
     public string IpAddress { get; set; }
 
     /// <summary>
+    /// The name or file location of the SQL database file.
     /// </summary>
     public string DatabaseSource { get; set; }
 
     /// <summary>
+    /// The selected Character Set to use when opening the connection.
     /// </summary>
     public string CharacterSet { get; set; }
 

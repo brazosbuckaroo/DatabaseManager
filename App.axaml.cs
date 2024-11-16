@@ -2,6 +2,7 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using DatabaseManager.Models.Services;
+using DatabaseManager.Models.Types;
 using DatabaseManager.ViewModels;
 using DatabaseManager.Views;
 using System.Diagnostics;
@@ -16,6 +17,12 @@ public partial class App : Application
     /// a file and put them in memory.
     /// </summary>
     private readonly ISettings _settingsViewModel = new ApplicationSettingsViewModel();
+
+    /// <summary>
+    /// A <see cref="ISecurity"/> object meant to be used and created to
+    /// manage the user verfication for the server.
+    /// </summary>
+    private readonly ISecurity _security = new SecurityManager();
     #endregion
 
     public override void Initialize()
@@ -25,13 +32,13 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        _settingsViewModel.ReadFromFileAsync();
+        this._settingsViewModel.ReadFromFileAsync();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(_settingsViewModel)
+                DataContext = new MainWindowViewModel(this._settingsViewModel, this._security)
             };
         }
 
