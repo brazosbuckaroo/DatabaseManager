@@ -45,7 +45,8 @@
               HorizontalContentAlignment="Center"
               Background="DimGray"
               FontSize="12"
-              Command="{Binding LoginCommand}">
+              Command="{Binding LoginCommand}"
+              HotKey="Enter">
       </Button>
     </StackPanel>
   </StackPanel>
