@@ -28,6 +28,16 @@ public partial class LoginSettingsWindow : ReactiveWindow<LoginSettingsWindowVie
     {
         this.InitializeComponent();
 
+        // Prevents the window from being closed outside of
+        // the command.
+        this.Closing += (s, e) =>
+        {
+            if (!e.IsProgrammatic)
+            {
+                e.Cancel = true;
+            };
+        };
+
         this.WhenActivated(disposables =>
         {
             disposables(ViewModel!.FileExplorerDialog.RegisterHandler(this.OpenFileExplorerAsync));

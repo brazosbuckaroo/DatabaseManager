@@ -24,17 +24,12 @@ public class MainWindowViewModel : ReactiveObject, IScreen
     public RoutingState Router { get; } = new RoutingState();
 
     /// <summary>
-    /// The ViewModel for the <see cref="LoginSettingsWindow"/>.
-    /// </summary>
-    public LoginSettingsWindowViewModel LoginSettingsWindowViewModel { get; }
-
-    /// <summary>
     /// The ViewModel meant for the <see cref="LoginView"/>.
     /// </summary>
     public LoginViewModel LoginViewModel { get; }
 
     /// <summary>
-    /// The ViewModel meant for the <see cref="MainView"/>.
+    /// The ViewModel meant for the <see cref="DashboardView"/>.
     /// </summary>
     public DashboardViewModel DashboardViewModel { get; }
     #endregion
@@ -48,7 +43,6 @@ public class MainWindowViewModel : ReactiveObject, IScreen
     {
         this.LoginViewModel = new LoginViewModel();
         this.DashboardViewModel = new DashboardViewModel();
-        this.LoginSettingsWindowViewModel = new LoginSettingsWindowViewModel();
 
         Router.Navigate.Execute(LoginViewModel);
     }
@@ -68,7 +62,6 @@ public class MainWindowViewModel : ReactiveObject, IScreen
     {
         this.DashboardViewModel = new DashboardViewModel(this);
         this.LoginViewModel = new LoginViewModel(settingsProvider, this, securityProvider, DashboardViewModel);
-        this.LoginSettingsWindowViewModel = new LoginSettingsWindowViewModel();
 
         Router.Navigate.Execute(LoginViewModel);
     }

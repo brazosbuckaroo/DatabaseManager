@@ -145,14 +145,14 @@ public class LoginSettingsWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, ApplicationSettingsViewModel> AcceptSettingsCommand { get; }
 
     /// <summary>
-    /// A <see cref="ICommand"/> used to open a system file dialog.
+    /// A <see cref="ReactiveCommand{Unit, Unit}"/> used to open a system file dialog.
     /// </summary>
-    public ICommand SelectFileDialogCommand { get; }
+    public ReactiveCommand<Unit, Unit> SelectFileDialogCommand { get; }
 
     /// <summary>
-    /// A <see cref="ICommand"/> used to open a system folder dialog.
+    /// A <see cref="ReactiveCommand{bool, Unit}"/> used to open a system folder dialog.
     /// </summary>
-    public ICommand SelectFolderDialogCommand { get; }
+    public ReactiveCommand<bool, Unit> SelectFolderDialogCommand { get; }
     #endregion
 
     #region CONSTRUCTORS

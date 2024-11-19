@@ -26,6 +26,15 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
     /// </summary>
     public Interaction<LoginSettingsWindowViewModel, ApplicationSettingsViewModel> LoginSettingsInteraction { get; }
 
+    /// <summary>
+    /// A <see cref="Interaction{LoginErrorWindowViewModel, string}"/> meant to be used to open
+    /// the error dialog window whenever there is a problem during loginning in.
+    /// 
+    /// For the time beinng this will return a string but the ideal thing is to 
+    /// make it just return a <see cref="Unit"/>.qqqqqqqqq
+    /// </summary>
+    public Interaction<LoginErrorWindowViewModel, string> LoginErrorInteraction { get; }
+
     /// <inheritdoc/>
     public IScreen HostScreen { get; }
 
@@ -111,6 +120,7 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
     public LoginViewModel()
     {
         this.LoginSettingsInteraction = new Interaction<LoginSettingsWindowViewModel, ApplicationSettingsViewModel>();
+        this.LoginErrorInteraction = new Interaction<LoginErrorWindowViewModel, string>();
         this.OpenLoginSettingsCommand = ReactiveCommand.CreateFromTask(OpenLoginSettingsDialogAsync);
         this.SettingsService = new ApplicationSettingsViewModel();
         this.SecurityManager = new SecurityManager();
@@ -145,6 +155,7 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
                           DashboardViewModel dashboardViewModel)
     {
         this.LoginSettingsInteraction = new Interaction<LoginSettingsWindowViewModel, ApplicationSettingsViewModel>();
+        this.LoginErrorInteraction = new Interaction<LoginErrorWindowViewModel, string>();
         this.OpenLoginSettingsCommand = ReactiveCommand.CreateFromTask(OpenLoginSettingsDialogAsync);
         this.DashboardView = dashboardViewModel;
         this.SettingsService = settingsProvider;
@@ -181,19 +192,11 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
         await dialog.GetCharacterSetsAsync();
         await dialog.ReadSettingsFromFileAsync();
 
-        ISettings settingsService = await LoginSettingsInteraction.Handle(dialog);
-
-        // hacky ???????????????????
-        // TODO: Look into a better way of handling the 
-        //       UnhandledInteractionErrorException
-        if (settingsService != null)
-        {
-            this.SettingsService = settingsService;
-            this.ConnectionString = new FbConnectionStringBuilder();
-            this.ConnectionString.Charset = this.SettingsService.Settings.CharacterSet;
-            this.ConnectionString.DataSource = this.SettingsService.Settings.IpAddress;
-            this.ConnectionString.Database = this.SettingsService.Settings.DatabaseSource;
-        }
+        this.SettingsService = await LoginSettingsInteraction.Handle(dialog);
+        this.ConnectionString = new FbConnectionStringBuilder();
+        this.ConnectionString.Charset = this.SettingsService.Settings.CharacterSet;
+        this.ConnectionString.DataSource = this.SettingsService.Settings.IpAddress;
+        this.ConnectionString.Database = this.SettingsService.Settings.DatabaseSource;
     }
 
     /// <summary>
@@ -211,6 +214,12 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
 
         if (!await SecurityManager.VerifyCredentialsAsync(this.ConnectionString))
         {
+            var dialog = new LoginErrorWindowViewModel();
+
+            // this is technically a string but we do not care about
+            // it. this is just a work around.
+            await this.LoginErrorInteraction.Handle(dialog);
+
             return await this.HostScreen.Router.Navigate.Execute(this);
         }
 
