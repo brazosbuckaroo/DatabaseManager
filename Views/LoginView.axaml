@@ -40,13 +40,24 @@
                Text="{Binding Password}">
       </TextBox>
 
-      <Button Content="Login"
-              HorizontalAlignment="Stretch"
+      <Button HorizontalAlignment="Stretch"
               HorizontalContentAlignment="Center"
               Background="DimGray"
               FontSize="12"
               Command="{Binding LoginCommand}"
               HotKey="Enter">
+        <StackPanel Orientation="Horizontal"
+                    Spacing="12">
+          <TextBlock FontSize="12"
+                     VerticalAlignment="Center">
+            Login
+          </TextBlock>
+          
+          <PathIcon Data="{DynamicResource LoginIconData}"
+                    Foreground="LightGreen"
+                    HorizontalAlignment="Right">
+          </PathIcon>
+        </StackPanel>
       </Button>
     </StackPanel>
   </StackPanel>
