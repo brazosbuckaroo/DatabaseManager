@@ -23,10 +23,11 @@ public class SecurityManager : ISecurity
     public async Task<bool> VerifyCredentialsAsync(FbConnectionStringBuilder connectionString)
     {
         if (connectionString.DataSource == string.Empty || 
-            IPAddress.TryParse(connectionString.DataSource, out IPAddress? _))
+            !IPAddress.TryParse(connectionString.DataSource, out IPAddress? _))
         {
             return false;
         }
+
 
         try
         {
